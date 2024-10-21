@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Bus\**" />
+    <EmbeddedResource Remove="Bus\**" />
+    <None Remove="Bus\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Entities\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Bus\" />
     <Folder Include="Shared\" />
   </ItemGroup>
 
