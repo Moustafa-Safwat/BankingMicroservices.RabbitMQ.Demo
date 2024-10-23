@@ -8,5 +8,6 @@ public class Account : BaseEntity
     public DateTime CreatedDate { get; set; }
     public bool IsActive { get; set; }
     public int UserId { get; set; }
+    // Navigation property
     public User User { get; set; } = null!;
 }
