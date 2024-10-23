@@ -17,10 +17,10 @@ public class Response<T>
         return new Response<T>
         {
             Success = result.IsSuccess,
-            Message = result.IsSuccess ? "Operation completed successfully." : result.Error.Message,
+            Message = result.IsSuccess ? "Operation completed successfully." : result.Errors[0].Message,
             Payload = result.IsSuccess ? result.Value : default,
             StatusCode = new StatusDetail(statusCode, StatusCodeDictionary.StatusCodes[statusCode]),
-            Errors = result.Errors
+            Errors = result.Errors.AsEnumerable().ToList()
         };
     }
 
@@ -31,10 +31,10 @@ public class Response<T>
         return new Response<T>
         {
             Success = result.IsSuccess,
-            Message = result.IsSuccess ? "Operation completed successfully." : result.Error.Message,
+            Message = result.IsSuccess ? "Operation completed successfully." : result.Errors[0].Message,
             Payload = default,
             StatusCode = new StatusDetail(statusCode, StatusCodeDictionary.StatusCodes[statusCode]),
-            Errors = result.Errors
+            Errors = result.Errors.AsEnumerable().ToList()
         };
     }
 

@@ -40,7 +40,7 @@ public interface ICrudRepository<T> where T : BaseEntity
     /// <param name="pageSize">The size of the page.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The result of the operation, including a queryable collection of entities.</returns>
-    Result<IQueryable<T>> GetPaged(int pageNumber, int pageSize, CancellationToken cancellationToken);
+    Task<Result<IQueryable<T>>> GetPaged(int pageNumber, int pageSize, CancellationToken cancellationToken);
 
     /// <summary>
     /// Deletes an entity by its ID asynchronously.

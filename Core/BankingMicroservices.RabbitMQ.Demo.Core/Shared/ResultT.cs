@@ -1,4 +1,6 @@
-﻿namespace BankingMicroservices.RabbitMQ.Demo.Core.Shared;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace BankingMicroservices.RabbitMQ.Demo.Core.Shared;
 
 public class Result<TValue>(TValue value, bool isSuccess, Error error)
     : Result(isSuccess, error)
@@ -19,7 +21,7 @@ public class Result<TValue>(TValue value, bool isSuccess, Error error)
 
     public new Result<TValue> AppendFailure(Error error)
     {
-        Error = error;
+        base.AppendFailure(error);
         return this;
     }
 }

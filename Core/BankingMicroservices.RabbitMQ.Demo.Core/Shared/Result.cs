@@ -2,17 +2,8 @@
 
 public class Result
 {
-    private Error _error = new(string.Empty, string.Empty);
-    public Error Error
-    {
-        get => _error;
-        protected set
-        {
-            _error = value;
-            Errors.Add(value);
-        }
-    }
-    public IList<Error> Errors { get; private set; } = [];
+    private readonly List<Error> _errors = [];
+    public IReadOnlyList<Error> Errors => _errors;
     public bool IsSuccess { get; }
     public bool IsFailure => !IsSuccess;
 
@@ -25,14 +16,17 @@ public class Result
         }
 
         IsSuccess = isSuccess;
-        Error = error;
+        if (error != Error.None)
+        {
+            _errors.Add(error);
+        }
     }
 
     public static Result Success() => new(true, Error.None);
     public static Result Failure(Error error) => new(false, error);
     public Result AppendFailure(Error error)
     {
-        Error = error;
+        _errors.Add(error);
         return this;
     }
 }
