@@ -62,7 +62,7 @@ public class CurdService<TDto, TEntity>(
     /// <returns>A queryable collection of entities representing the specified page.</returns>
     public virtual async Task<Result<IQueryable<TDto>>> GetPaged(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-        var result = await repository.GetPaged(pageNumber, pageSize, cancellationToken);
+        var result = await repository.GetPagedAsync(pageNumber, pageSize, cancellationToken);
          return Result<IQueryable<TDto>>.Success(result.Value.ProjectTo<TDto>(mapper.ConfigurationProvider));
     }
 
