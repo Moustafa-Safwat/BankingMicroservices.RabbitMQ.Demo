@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Application\BankingMicroservices.RabbitMQ.Demo.Application\BankingMicroservices.RabbitMQ.Demo.Application.csproj" />
     <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Banking.Core\BankingMicroservices.RabbitMQ.Demo.Banking.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Dtos\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Mapper\" />
+    <Folder Include="Events\" />
+    <Folder Include="Services\" />
+    <Folder Include="Queries\" />
   </ItemGroup>
 
 </Project>
