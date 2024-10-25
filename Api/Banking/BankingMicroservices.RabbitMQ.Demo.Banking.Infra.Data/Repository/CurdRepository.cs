@@ -14,6 +14,9 @@ public class CurdRepository<TEntity>(AccountDbContext context)
     : ICrudRepository<TEntity>
     where TEntity : BaseEntity
 {
+    protected AccountDbContext Context => context;
+    protected string EntityName => typeof(TEntity).Name.ToUpper();
+
     /// <summary>
     /// Adds a new entity asynchronously.
     /// </summary>
@@ -24,13 +27,13 @@ public class CurdRepository<TEntity>(AccountDbContext context)
     {
         if (entity is null)
         {
-            return Result<int>.Failure(new Error("ERR_ADD_ENTITY_NULL", "The entity provided for addition is null."));
+            return Result<int>.Failure(new Error($"ERR_ADD_{EntityName}_NULL", $"The {EntityName} provided for addition is null."));
         }
         await context.AddAsync(entity, cancellationToken);
         var saveResult = await context.SaveChangesAsync(cancellationToken);
         if (saveResult <= 0)
         {
-            return Result<int>.Failure(new Error("ERR_SAVE_FAILED", "No records were saved to the database."));
+            return Result<int>.Failure(new Error($"ERR_SAVE_{EntityName}_FAILED", $"No {EntityName} records were saved to the database."));
         }
         return Result<int>.Success(entity.Id);
     }
@@ -48,19 +51,19 @@ public class CurdRepository<TEntity>(AccountDbContext context)
             var entity = await context.Set<TEntity>().FindAsync([id], cancellationToken);
             if (entity is null)
             {
-                return Result.Failure(new Error("ERR_ENTITY_NOT_FOUND", "The entity with the specified ID was not found."));
+                return Result.Failure(new Error($"ERR_{EntityName}_NOT_FOUND", $"The {EntityName} with the specified ID was not found."));
             }
             context.Set<TEntity>().Remove(entity);
             var removeResult = await context.SaveChangesAsync(cancellationToken);
             if (removeResult <= 0)
             {
-                return Result.Failure(new Error("ERR_REMOVE_FAILED", "No records were removed from the database."));
+                return Result.Failure(new Error($"ERR_REMOVE_{EntityName}_FAILED", $"No {EntityName} records were removed from the database."));
             }
             return Result.Success();
         }
         catch (DbUpdateConcurrencyException)
         {
-            return Result.Failure(new Error("ERR_CONCURRENCY_EXCEPTION", "A concurrency exception occurred while deleting the entity."));
+            return Result.Failure(new Error($"ERR_CONCURRENCY_{EntityName}_EXCEPTION", $"A concurrency exception occurred while deleting the {EntityName}."));
         }
     }
 
@@ -75,7 +78,7 @@ public class CurdRepository<TEntity>(AccountDbContext context)
         var entity = await context.Set<TEntity>().FindAsync([id], cancellationToken);
         if (entity is null)
         {
-            return Result<TEntity?>.Failure(new Error("ERR_ENTITY_NOT_FOUND", "The entity with the specified ID was not found."));
+            return Result<TEntity?>.Failure(new Error($"ERR_{EntityName}_NOT_FOUND", $"The {EntityName} with the specified ID was not found."));
         }
         return Result<TEntity?>.Success(entity);
     }
@@ -91,22 +94,22 @@ public class CurdRepository<TEntity>(AccountDbContext context)
     {
         if (pageNumber <= 0)
         {
-            return Result<IQueryable<TEntity>>.Failure(new Error("ERR_INVALID_PAGE_NUMBER", "Page number must be greater than 0."));
+            return Result<IQueryable<TEntity>>.Failure(new Error($"ERR_INVALID_{EntityName}_PAGE_NUMBER", "Page number must be greater than 0."));
         }
 
         if (pageSize <= 0)
         {
-            return Result<IQueryable<TEntity>>.Failure(new Error("ERR_INVALID_PAGE_SIZE", "Page size must be greater than 0."));
+            return Result<IQueryable<TEntity>>.Failure(new Error($"ERR_INVALID_{EntityName}_PAGE_SIZE", "Page size must be greater than 0."));
         }
 
         var query = context.Set<TEntity>()
-                           .Skip((pageNumber - 1) * pageSize) // Corrected paging
+                           .Skip((pageNumber - 1) * pageSize)
                            .Take(pageSize)
                            .AsQueryable();
 
         if (!await query.AnyAsync(cancellationToken))
         {
-            return Result<IQueryable<TEntity>>.Failure(new Error("ERR_NO_RECORDS_FOUND", "No records were found."));
+            return Result<IQueryable<TEntity>>.Failure(new Error($"ERR_NO_{EntityName}_RECORDS_FOUND", $"No {EntityName} records were found."));
         }
 
         return Result<IQueryable<TEntity>>.Success(query);
@@ -122,7 +125,7 @@ public class CurdRepository<TEntity>(AccountDbContext context)
     {
         if (entity is null)
         {
-            return Result.Failure(new Error("ERR_UPDATE_ENTITY_NULL", "The entity provided for update is null."));
+            return Result.Failure(new Error($"ERR_UPDATE_{EntityName}_NULL", $"The {EntityName} provided for update is null."));
         }
 
         try
@@ -130,21 +133,21 @@ public class CurdRepository<TEntity>(AccountDbContext context)
             var existingEntity = await context.Set<TEntity>().FindAsync([entity.Id], cancellationToken);
             if (existingEntity is null)
             {
-                return Result.Failure(new Error("ERR_ENTITY_NOT_FOUND", "The entity with the specified ID was not found."));
+                return Result.Failure(new Error($"ERR_{EntityName}_NOT_FOUND", $"The {EntityName} with the specified ID was not found."));
             }
 
             context.Entry(existingEntity).CurrentValues.SetValues(entity);
             var updateResult = await context.SaveChangesAsync(cancellationToken);
             if (updateResult <= 0)
             {
-                return Result.Failure(new Error("ERR_UPDATE_FAILED", "No records were updated in the database."));
+                return Result.Failure(new Error($"ERR_UPDATE_{EntityName}_FAILED", $"No {EntityName} records were updated in the database."));
             }
 
             return Result.Success();
         }
         catch (DbUpdateConcurrencyException)
         {
-            return Result.Failure(new Error("ERR_CONCURRENCY_EXCEPTION", "A concurrency exception occurred while updating the entity."));
+            return Result.Failure(new Error($"ERR_CONCURRENCY_{EntityName}_EXCEPTION", $"A concurrency exception occurred while updating the {EntityName}."));
         }
     }
 }

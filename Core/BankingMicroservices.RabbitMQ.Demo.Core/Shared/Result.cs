@@ -24,6 +24,24 @@ public class Result
 
     public static Result Success() => new(true, Error.None);
     public static Result Failure(Error error) => new(false, error);
+    public static Result Failures(IReadOnlyList<Error> errors)
+    {
+        if (errors == null || errors.Count == 0)
+        {
+            throw new ArgumentException("The errors collection must not be null or empty.", nameof(errors));
+        }
+
+        var result = new Result(false, errors[0]);
+        for (int i = 1; i < errors.Count; i++)
+        {
+            if (errors[i] == null)
+            {
+                throw new ArgumentException("The errors collection must not contain null values.", nameof(errors));
+            }
+            result.AppendFailure(errors[i]);
+        }
+        return result;
+    }
     public Result AppendFailure(Error error)
     {
         _errors.Add(error);

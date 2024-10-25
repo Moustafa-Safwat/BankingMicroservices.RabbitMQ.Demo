@@ -4,7 +4,7 @@ using BankingMicroservices.RabbitMQ.Demo.Core.Shared;
 
 namespace BankingMicroservices.RabbitMQ.Demo.Banking.Core.Interfaces;
 
-public interface IUserRepository : ICrudRepository<Account>
+public interface IUserRepository : ICrudRepository<User>
 {
-    Task<Result<IQueryable<Account>>> GetUserAccounts(int userId);
+    Task<Result<IQueryable<Account>>> GetUserAccounts(int userId, CancellationToken cancellationToken);
 }
