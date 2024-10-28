@@ -11,4 +11,6 @@ public static class DependenceyContainer
         services.AddSingleton<IEventBus, RabbitMqBus>();
         return services;
     }
+
+
 }

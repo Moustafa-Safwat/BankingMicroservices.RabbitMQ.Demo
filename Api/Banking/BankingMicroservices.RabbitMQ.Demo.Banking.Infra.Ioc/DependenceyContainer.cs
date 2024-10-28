@@ -1,4 +1,10 @@
-﻿using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Entities;
+﻿using BankingMicroservices.RabbitMQ.Demo.Application.Interfaces;
+using BankingMicroservices.RabbitMQ.Demo.Application.Services;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Dtos;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Interfaces;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Mapper;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Services;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Entities;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data.Repository;
 using BankingMicroservices.RabbitMQ.Demo.Core.Interfaces;
@@ -10,7 +16,9 @@ public static class DependenceyContainer
 {
     public static IServiceCollection RegisterServices(this IServiceCollection services)
     {
-
+        services.AddScoped<ICurdService<AddAccountDto, UpdateAccountDto, AccountSearchDto>,
+                           CurdService<AddAccountDto, UpdateAccountDto, AccountSearchDto, Account>>();
+        services.AddScoped<IAccountService, AccountService>();
         return services;
     }
 
@@ -25,6 +33,12 @@ public static class DependenceyContainer
         services.AddScoped<ICrudRepository<User>, CurdRepository<User>>();
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        return services;
+    }
+    public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(AutoMapperConfiguration));
+        AutoMapperConfiguration.RegisterMappings();
         return services;
     }
 }

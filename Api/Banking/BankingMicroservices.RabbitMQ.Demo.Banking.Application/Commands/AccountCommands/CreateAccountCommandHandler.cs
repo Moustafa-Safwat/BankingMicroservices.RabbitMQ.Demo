@@ -15,6 +15,11 @@ public class CreateAccountCommandHandler(
     public async Task<Result<int>> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
     {
         var addAccountDto = mapper.Map<CreateAccountCommand, AddAccountDto>(request);
-        return await accountService.AddAsync(addAccountDto, cancellationToken);
+        var result =await accountService.AddAsync(addAccountDto, cancellationToken);
+        if (result.IsSuccess)
+        {
+            return result;
+        }
+        return Result<int>.Failures(result.Errors);
     }
 }

@@ -32,7 +32,8 @@ public class CurdService<TAddDto, TUpdateDto, TSearchDto, TEntity>(
     public virtual async Task<Result<int>> AddAsync(TAddDto dto, CancellationToken cancellationToken)
     {
         var mappedEntity = mapper.Map<TAddDto, TEntity>(dto);
-        return await repository.AddAsync(mappedEntity, cancellationToken);
+        var result = await repository.AddAsync(mappedEntity, cancellationToken);
+        return result.IsSuccess ? Result<int>.Success(result.Value) : Result<int>.Failures(result.Errors);
     }
 
     /// <summary>
@@ -42,7 +43,8 @@ public class CurdService<TAddDto, TUpdateDto, TSearchDto, TEntity>(
     /// <returns>A task representing the asynchronous operation. The task result contains a boolean value indicating whether the entity was deleted successfully.</returns>
     public virtual async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
     {
-        return await repository.DeleteAsync(id, cancellationToken);
+        var result = await repository.DeleteAsync(id, cancellationToken);
+        return result.IsSuccess ? Result.Success() : Result.Failures(result.Errors);
     }
 
     /// <summary>
@@ -53,7 +55,11 @@ public class CurdService<TAddDto, TUpdateDto, TSearchDto, TEntity>(
     public virtual async Task<Result<TSearchDto?>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         var entity = await repository.GetByIdAsync(id, cancellationToken);
-        return mapper.Map<TEntity, TSearchDto>(entity.Value!);
+        if (entity.IsSuccess)
+        {
+            return Result<TSearchDto?>.Success(mapper.Map<TEntity, TSearchDto>(entity.Value!));
+        }
+        return Result<TSearchDto?>.Failures(entity.Errors);
     }
 
     /// <summary>
@@ -65,7 +71,8 @@ public class CurdService<TAddDto, TUpdateDto, TSearchDto, TEntity>(
     public virtual async Task<Result<IQueryable<TSearchDto>>> GetPaged(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         var result = await repository.GetPagedAsync(pageNumber, pageSize, cancellationToken);
-        return Result<IQueryable<TSearchDto>>.Success(result.Value.ProjectTo<TSearchDto>(mapper.ConfigurationProvider));
+        return result.IsSuccess ? Result<IQueryable<TSearchDto>>.Success(result.Value.ProjectTo<TSearchDto>(mapper.ConfigurationProvider)) 
+            : Result<IQueryable<TSearchDto>>.Failures(result.Errors);
     }
 
     /// <summary>
@@ -76,6 +83,7 @@ public class CurdService<TAddDto, TUpdateDto, TSearchDto, TEntity>(
     public virtual async Task<Result> UpdateAsync(TUpdateDto entity, CancellationToken cancellationToken)
     {
         var mappedEntity = mapper.Map<TUpdateDto, TEntity>(entity);
-        return await repository.UpdateAsync(mappedEntity, cancellationToken);
+        var result = await repository.UpdateAsync(mappedEntity, cancellationToken);
+        return result.IsSuccess ? Result.Success() : Result.Failures(result.Errors);
     }
 }

@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application\BankingMicroservices.RabbitMQ.Demo.Application\BankingMicroservices.RabbitMQ.Demo.Application.csproj" />
     <ProjectReference Include="..\Core\BankingMicroservices.RabbitMQ.Demo.Core\BankingMicroservices.RabbitMQ.Demo.Core.csproj" />
     <ProjectReference Include="..\Infrastructure\BankingMicroservices.RabbitMQ.Demo.Infra.Bus\BankingMicroservices.RabbitMQ.Demo.Infra.Bus.csproj" />
   </ItemGroup>

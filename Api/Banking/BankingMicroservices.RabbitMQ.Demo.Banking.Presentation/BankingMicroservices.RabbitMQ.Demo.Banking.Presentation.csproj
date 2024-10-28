@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\**" />
-    <Content Remove="Controllers\**" />
-    <EmbeddedResource Remove="Controllers\**" />
-    <None Remove="Controllers\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -24,7 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BankingMicroservices.RabbitMQ.Demo.Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation.csproj" />
+    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Banking.Application\BankingMicroservices.RabbitMQ.Demo.Banking.Application.csproj" />
     <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data.csproj" />
+    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Ioc\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Ioc.csproj" />
   </ItemGroup>
 
 </Project>
