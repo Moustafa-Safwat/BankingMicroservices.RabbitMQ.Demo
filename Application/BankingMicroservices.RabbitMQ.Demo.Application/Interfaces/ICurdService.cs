@@ -1,12 +1,13 @@
-﻿using BankingMicroservices.RabbitMQ.Demo.Core.Shared;
+﻿using BankingMicroservices.RabbitMQ.Demo.Application.Dtos;
+using BankingMicroservices.RabbitMQ.Demo.Core.Shared;
 
 namespace BankingMicroservices.RabbitMQ.Demo.Application.Interfaces;
 
-public interface ICurdService<T>
+public interface ICurdService<TAddDto, TUpdateDto, TSearchDto>
 {
-    Task<Result<int>> AddAsync(T entity, CancellationToken cancellationToken);
-    Task<Result> UpdateAsync(T entity, CancellationToken cancellationToken);
-    Task<Result<T?>> GetByIdAsync(int id, CancellationToken cancellationToken);
-    Task<Result<IQueryable<T>>> GetPaged(int pageNumber, int pageSize, CancellationToken cancellationToken);
+    Task<Result<int>> AddAsync(TAddDto entity, CancellationToken cancellationToken);
+    Task<Result> UpdateAsync(TUpdateDto entity, CancellationToken cancellationToken);
+    Task<Result<TSearchDto?>> GetByIdAsync(int id, CancellationToken cancellationToken);
+    Task<Result<IQueryable<TSearchDto>>> GetPaged(int pageNumber, int pageSize, CancellationToken cancellationToken);
     Task<Result> DeleteAsync(int id, CancellationToken cancellationToken);
 }
