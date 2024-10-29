@@ -14,6 +14,7 @@ public class AccountController(
     )
     : ApiController(sender, mapper)
 {
+
     // GET : api/account/{id}
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAccountById(int id, CancellationToken cancellationToken)

@@ -1,6 +1,10 @@
 using BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data.Context;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Ioc;
+using BankingMicroservices.RabbitMQ.Demo.Presentation.Configuration;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +28,12 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
         BankingMicroservices.RabbitMQ.Demo.Application.AssemblyReference.Assembly,
     BankingMicroservices.RabbitMQ.Demo.Banking.Application.AssemblyReference.Assembly
 ));
+// Register Fluent Validation
+builder.Services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters()
+                .AddValidatorsFromAssembly(BankingMicroservices.RabbitMQ.Demo.Banking.Application.AssemblyReference.Assembly);
+// Override default validation response
+builder.Services.AddCustomValidationResponse();
 
 var app = builder.Build();
 

@@ -6,15 +6,18 @@ public class CreateAccountCommandValidator : AbstractValidator<CreateAccountComm
 {
     public CreateAccountCommandValidator()
     {
-        RuleFor(account => account.Balance)
+        RuleFor(command => command.Balance)
             .NotEmpty().WithMessage("Balance is required")
-            .GreaterThanOrEqualTo(0).WithMessage("Balance must be greater than or equal to 0");
+            .GreaterThanOrEqualTo(0).WithMessage("Balance must be greater than or equal to 0")
+            .NotNull().WithMessage("Balance can't be null");
 
-        RuleFor(account => account.IsActive)
-            .NotEmpty().WithMessage("IsActive is requidred");
+        RuleFor(command => command.IsActive)
+            .Must(value => value == true || value == false)  // Allow both true and false
+            .WithMessage("IsActive must be provided as true or false.");
 
-        RuleFor(account => account.UserId)
+
+        RuleFor(command => command.UserId)
             .NotEmpty().WithMessage("UserId is required")
-            .GreaterThanOrEqualTo(0).WithMessage("UserId must be greater than or equal to 0");
+            .GreaterThan(0).WithMessage("UserId must be greater than 0");
     }
 }
