@@ -39,5 +39,11 @@ public class AccountController(
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
-    
+    // DELETE : api/account/{id}
+    [HttpDelete]
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+    {
+        var result = await Sender.Send(new DeleteAccountCommand(id), cancellationToken);
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
+    }
 }

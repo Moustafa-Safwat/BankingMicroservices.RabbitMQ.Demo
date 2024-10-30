@@ -12,6 +12,8 @@ public sealed class UpdateAccountCommandValidator : AbstractValidator<UpdateAcco
         RuleFor(command => command.Balance)
             .GreaterThanOrEqualTo(0).WithMessage("Balance must be greater than or equal to 0.");
 
+        RuleFor(command => command.RowVersion)
+            .NotNull().WithMessage("RowVersion must not be null.");
 
         RuleFor(command => command.UserId)
             .GreaterThan(0).WithMessage("UserId must be greater than 0.");
