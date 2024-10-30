@@ -1,5 +1,6 @@
 ﻿using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data.EntitiesConfigurations;
@@ -16,7 +17,14 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
                .HasForeignKey(account => account.UserId);
         // Set Required fields
         builder.Property(account => account.Balance).IsRequired();
-        builder.Property(account => account.CreatedDate).IsRequired();
+        builder.Property(account => account.CreatedDate)
+            .IsRequired()
+            .HasDefaultValueSql("GETDATE()")
+            .ValueGeneratedOnAdd()
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+        builder.Property(account => account.UpdatedDate)
+            .IsRequired()
+            .HasDefaultValueSql("GETDATE()");
         builder.Property(account => account.IsActive).IsRequired();
         // Set Check Constraint
         builder.ToTable(account => account.HasCheckConstraint("CK_Account_Balance_Positive"

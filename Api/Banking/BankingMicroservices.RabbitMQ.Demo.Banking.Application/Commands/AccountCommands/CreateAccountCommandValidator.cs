@@ -2,13 +2,13 @@
 
 namespace BankingMicroservices.RabbitMQ.Demo.Banking.Application.Commands.AccountCommands;
 
-public class CreateAccountCommandValidator : AbstractValidator<CreateAccountCommand>
+public sealed class CreateAccountCommandValidator : AbstractValidator<CreateAccountCommand>
 {
     public CreateAccountCommandValidator()
     {
         RuleFor(command => command.Balance)
             .NotEmpty().WithMessage("Balance is required")
-            .GreaterThanOrEqualTo(0).WithMessage("Balance must be greater than or equal to 0")
+            .GreaterThanOrEqualTo(3000).WithMessage("Balance must be greater than or equal to 3000")
             .NotNull().WithMessage("Balance can't be null");
 
         RuleFor(command => command.IsActive)

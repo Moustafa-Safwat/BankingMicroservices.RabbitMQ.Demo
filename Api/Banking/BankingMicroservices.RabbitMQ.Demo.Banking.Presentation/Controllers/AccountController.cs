@@ -19,12 +19,8 @@ public class AccountController(
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAccountById(int id, CancellationToken cancellationToken)
     {
-        var result = await Sender.Send(new AccountQuery { AccountId = id }, cancellationToken);
-        if (result.IsSuccess)
-        {
-            return Ok(result);
-        }
-        return NotFound(result);
+        var result = await Sender.Send(new AccountQuery { Id = id }, cancellationToken);
+        return result.IsSuccess ? Ok(result) : NotFound(result);
     }
 
     // POST : api/account
@@ -32,10 +28,16 @@ public class AccountController(
     public async Task<IActionResult> Add(CreateAccountCommand createAccountCommand, CancellationToken cancellationToken)
     {
         var result = await Sender.Send(createAccountCommand, cancellationToken);
-        if (result.IsSuccess)
-        {
-            return Ok(result);
-        }
-        return BadRequest(result);
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
+
+    // UPDATE : api/account/{id}
+    [HttpPut]
+    public async Task<IActionResult> Update(UpdateAccountCommand updateAccountCommand, CancellationToken cancellationToken)
+    {
+        var result = await Sender.Send(updateAccountCommand, cancellationToken);
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
+    }
+
+    
 }

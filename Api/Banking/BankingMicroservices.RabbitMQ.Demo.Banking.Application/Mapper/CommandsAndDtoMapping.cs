@@ -10,5 +10,6 @@ public sealed class CommandsAndDtoMapping : Profile
     public CommandsAndDtoMapping()
     {
         CreateMap<CreateAccountCommand, AddAccountDto>();
+        CreateMap<UpdateAccountCommand, UpdateAccountDto>();
     }
 }

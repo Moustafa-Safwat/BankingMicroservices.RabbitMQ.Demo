@@ -18,7 +18,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(user => user.FullName).IsRequired();
         builder.Property(user => user.Email).IsRequired();
         builder.Property(user => user.PhoneNumber).IsRequired();
-        builder.Property(user => user.CreatedDate).IsRequired();
+        builder.Property(account => account.CreatedDate)
+             .IsRequired()
+             .HasDefaultValueSql("GETDATE()")
+             .ValueGeneratedOnAdd();
+        builder.Property(account => account.UpdatedDate)
+            .IsRequired()
+            .HasDefaultValueSql("GETDATE()")
+            .ValueGeneratedOnUpdate();
         // Set Check Constraint
         builder.ToTable(user => user.HasCheckConstraint("CK_User_Email_Format"
             , $"[{nameof(User.Email)}] LIKE '%_@__%.__%'"));

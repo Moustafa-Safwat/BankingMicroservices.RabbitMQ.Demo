@@ -5,5 +5,5 @@ namespace BankingMicroservices.RabbitMQ.Demo.Banking.Application.Queries.Account
 
 public sealed record AccountQuery : IQuery<AccountSearchDto>
 {
-    public int AccountId { get; init; }
+    public int Id { get; init; }
 }

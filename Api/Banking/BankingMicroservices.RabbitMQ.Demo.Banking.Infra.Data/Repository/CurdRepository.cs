@@ -130,13 +130,17 @@ public class CurdRepository<TEntity>(AccountDbContext context)
 
         try
         {
-            var existingEntity = await context.Set<TEntity>().FindAsync([entity.Id], cancellationToken);
-            if (existingEntity is null)
+            var existingEntityResult = await GetByIdAsync(entity.Id, cancellationToken);
+            if (existingEntityResult.IsFailure || existingEntityResult.Value is null)
             {
                 return Result.Failure(new Error($"ERR_{EntityName}_NOT_FOUND", $"The {EntityName} with the specified ID was not found."));
             }
+            // Detach the existing entity to avoid tracking conflicts
+            context.Entry(existingEntityResult.Value).State = EntityState.Detached;
 
-            context.Entry(existingEntity).CurrentValues.SetValues(entity);
+            entity.CreatedDate = existingEntityResult.Value.CreatedDate;
+            entity.UpdatedDate = DateTime.Now;
+            context.Set<TEntity>().Update(entity);
             var updateResult = await context.SaveChangesAsync(cancellationToken);
             if (updateResult <= 0)
             {
