@@ -18,7 +18,8 @@ builder.Services.AddSwaggerGen();
 // Register services, repositories, and automapper
 builder.Services.RegisterRepositories()
                 .RegisterServices()
-                .RegisterAutoMapper();
+                .RegisterAutoMapper()
+                .RegisterRequestValidator();
 // Register DbContext
 builder.Services.AddDbContext<AccountDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("AccountDbCS"))

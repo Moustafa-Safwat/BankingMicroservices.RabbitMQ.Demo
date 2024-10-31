@@ -46,4 +46,21 @@ public class AccountController(
         var result = await Sender.Send(new DeleteAccountCommand(id), cancellationToken);
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
+
+    // GET : api/account?pageNumber=1&pageSize=10
+    [HttpGet]
+    public async Task<IActionResult> GetAccounts(int pageNumber, int pageSize)
+    {
+        var result = await Sender.Send(new AccountListQuery(pageNumber, pageSize));
+        return result.IsSuccess ? Ok(result) : NotFound(result);
+    }
+
+    // GET : api/account/{accountId}/user
+    [HttpGet("{accountId}/user")]
+    public async Task<IActionResult> GetUserByAccountId(int accountId, CancellationToken cancellationToken)
+    {
+        var result = await Sender.Send(new UserByAccountIdQuery(accountId), cancellationToken);
+        return result.IsSuccess ? Ok(result) : NotFound(result);
+    }
+
 }

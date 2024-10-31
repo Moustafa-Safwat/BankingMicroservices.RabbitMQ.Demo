@@ -29,8 +29,9 @@ public class AccountService(
         return await base.AddAsync(accountDto, cancellationToken);
     }
 
-    public Task<Result<User>> GetUserByAccountIdAsync(int accountId, CancellationToken cancellationToken)
+    public async Task<Result<UserSearchDto>> GetUserByAccountIdAsync(int accountId, CancellationToken cancellationToken)
     {
-        return accountRepository.GetUserByAccountIdAsync(accountId, cancellationToken);
+        var result = await accountRepository.GetUserByAccountIdAsync(accountId, cancellationToken);
+        return result.IsSuccess ? Result<UserSearchDto>.Success(Mapper.Map<User, UserSearchDto>(result.Value)) : Result<UserSearchDto>.Failures(result.Errors);
     }
 }

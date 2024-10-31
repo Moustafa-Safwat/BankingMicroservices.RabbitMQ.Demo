@@ -3,6 +3,7 @@ using BankingMicroservices.RabbitMQ.Demo.Application.Services;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Dtos;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Mapper;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Queries.AccountQueries;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Services;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Entities;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Interfaces;
@@ -33,6 +34,17 @@ public static class DependenceyContainer
         services.AddScoped<ICrudRepository<User>, CurdRepository<User>>();
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        return services;
+    }
+
+    public static IServiceCollection RegisterRequestValidator(this IServiceCollection services)
+    {
+        services.AddScoped<IResultValidator<AccountListQuery, IQueryable<AccountSearchDto>>
+            , ResultValidator<AccountListQuery, IQueryable<AccountSearchDto>>>();
+        services.AddScoped<IResultValidator<UserByAccountIdQuery, UserSearchDto>
+            , ResultValidator<UserByAccountIdQuery, UserSearchDto>>();
+        services.AddScoped<IResultValidator<AccountQuery, AccountSearchDto>
+             , ResultValidator<AccountQuery, AccountSearchDto>>();
         return services;
     }
     public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
