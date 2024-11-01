@@ -16,5 +16,6 @@ public sealed class EntitiesAndDtos : Profile
         CreateMap<User, UserDataWithAccountDto>().ReverseMap();
         CreateMap<User, UserDataWithAccountDto>().ReverseMap();
         CreateMap<User, UserAddDto>().ReverseMap();
+        CreateMap<User, UserUpdateDto>().ReverseMap();
     }
 }

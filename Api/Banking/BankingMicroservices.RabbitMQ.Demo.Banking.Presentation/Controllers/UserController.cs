@@ -30,4 +30,12 @@ public class UserController(
         var result = await Sender.Send(createUserCommand, cancellationToken);
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
+
+    // UPDATE : api/user
+    [HttpPut]
+    public async Task<IActionResult> Update(UpdateUserCommand updateUserCommand, CancellationToken cancellationToken)
+    {
+        var result = await Sender.Send(updateUserCommand, cancellationToken);
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
+    }
 }

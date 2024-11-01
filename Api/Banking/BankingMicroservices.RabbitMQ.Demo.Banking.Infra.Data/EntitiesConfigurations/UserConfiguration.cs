@@ -24,8 +24,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
              .ValueGeneratedOnAdd();
         builder.Property(account => account.UpdatedDate)
             .IsRequired()
-            .HasDefaultValueSql("GETDATE()")
-            .ValueGeneratedOnUpdate();
+            .HasDefaultValueSql("GETDATE()");
         // Set Check Constraint
         builder.ToTable(user => user.HasCheckConstraint("CK_User_Email_Format"
             , $"[{nameof(User.Email)}] LIKE '%_@__%.__%'"));
