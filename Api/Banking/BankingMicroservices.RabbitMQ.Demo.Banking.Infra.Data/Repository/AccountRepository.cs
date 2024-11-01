@@ -13,6 +13,18 @@ public class AccountRepository(AccountDbContext context)
     : CurdRepository<Account>(context)
     , IAccountRepository
 {
+    public async Task<Result<Account>> GetAccountByIdWithUserAsync(int accountId, CancellationToken cancellationToken)
+    {
+        var account = await Context.Set<Account>()
+       .Include(a => a.User)
+       .FirstOrDefaultAsync(a => a.Id == accountId, cancellationToken);
+
+        if (account == null)
+        {
+            return Result<Account>.Failure(new Error($"ERR_ACCOUNT_NOT_FOUND", $"The account with the specified ID was not found."));
+        }
+        return Result<Account>.Success(account);
+    }
 
     /// <summary>
     /// Gets the user associated with a specific account by the account ID.

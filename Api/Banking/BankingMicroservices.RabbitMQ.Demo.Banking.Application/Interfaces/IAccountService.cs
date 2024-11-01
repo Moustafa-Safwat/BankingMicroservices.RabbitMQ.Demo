@@ -7,4 +7,5 @@ namespace BankingMicroservices.RabbitMQ.Demo.Banking.Application.Interfaces;
 public interface IAccountService : ICurdService<AddAccountDto, UpdateAccountDto, AccountSearchDto>
 {
     Task<Result<UserSearchDto>> GetUserByAccountIdAsync(int accountId, CancellationToken cancellationToken);
+    Task<Result<AccountWithUserDetailsDto>> GetAccountByIdWithUserAsync(int accountId, CancellationToken cancellationToken);
 }

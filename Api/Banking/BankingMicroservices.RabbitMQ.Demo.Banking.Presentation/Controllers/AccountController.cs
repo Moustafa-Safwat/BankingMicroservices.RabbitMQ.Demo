@@ -15,11 +15,11 @@ public class AccountController(
     : ApiController(sender, mapper)
 {
 
-    // GET : api/account/{id}
+    // GET : api/account/{id}?includeUser =true
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAccountById(int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAccountById(int id, CancellationToken cancellationToken, bool includeUser = false)
     {
-        var result = await Sender.Send(new AccountQuery { Id = id }, cancellationToken);
+        var result = await Sender.Send(new AccountQuery { Id = id, IncludeUser = includeUser }, cancellationToken);
         return result.IsSuccess ? Ok(result) : NotFound(result);
     }
 
