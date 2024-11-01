@@ -1,10 +1,10 @@
-﻿using BankingMicroservices.RabbitMQ.Demo.Application.Dtos;
-using BankingMicroservices.RabbitMQ.Demo.Application.Interfaces;
+﻿using BankingMicroservices.RabbitMQ.Demo.Application.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Application.Services;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Dtos;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Mapper;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Queries.AccountQueries;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Queries.UserQueries;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Services;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Entities;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Interfaces;
@@ -20,6 +20,8 @@ public static class DependenceyContainer
     {
         services.AddScoped<ICurdService<AddAccountDto, UpdateAccountDto, AccountSearchDto>,
                            CurdService<AddAccountDto, UpdateAccountDto, AccountSearchDto, Account>>();
+        services.AddScoped<ICurdService<UserAddDto, UserUpdateDto, UserSearchDto>,
+                           CurdService<UserAddDto, UserUpdateDto, UserSearchDto, User>>();
         services.AddScoped<IAccountService, AccountService>();
         return services;
     }
@@ -46,6 +48,8 @@ public static class DependenceyContainer
             , ResultValidator<UserByAccountIdQuery, UserSearchDto>>();
         services.AddScoped<IResultValidator<AccountQuery, object>
              , ResultValidator<AccountQuery, object>>();
+        services.AddScoped<IResultValidator<UserQuery, UserSearchDto>
+            , ResultValidator<UserQuery, UserSearchDto>>();
         return services;
     }
     public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)

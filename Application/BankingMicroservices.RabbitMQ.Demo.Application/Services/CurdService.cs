@@ -17,10 +17,10 @@ public class CurdService<TAddDto, TUpdateDto, TSearchDto, TEntity>(
     IMapper mapper
     )
     : ICurdService<TAddDto, TUpdateDto, TSearchDto>
-    where TAddDto : BaseDto, new()
-    where TUpdateDto : BaseDto, new()
-    where TSearchDto : BaseDto, new()
-    where TEntity : BaseEntity, new()
+    where TAddDto : BaseDto
+    where TUpdateDto : BaseDto
+    where TSearchDto : BaseDto
+    where TEntity : BaseEntity
 {
     protected IMapper Mapper => mapper;
 

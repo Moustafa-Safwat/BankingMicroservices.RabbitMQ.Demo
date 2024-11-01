@@ -1,5 +1,4 @@
-﻿using BankingMicroservices.RabbitMQ.Demo.Application.Dtos;
-using BankingMicroservices.RabbitMQ.Demo.Core.Shared;
+﻿using BankingMicroservices.RabbitMQ.Demo.Core.Shared;
 
 namespace BankingMicroservices.RabbitMQ.Demo.Application.Interfaces;
 

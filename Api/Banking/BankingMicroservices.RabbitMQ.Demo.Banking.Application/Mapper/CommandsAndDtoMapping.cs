@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Commands.AccountCommands;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Commands.UserCommands;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Dtos;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Queries.AccountQueries;
 
@@ -11,5 +12,6 @@ public sealed class CommandsAndDtoMapping : Profile
     {
         CreateMap<CreateAccountCommand, AddAccountDto>();
         CreateMap<UpdateAccountCommand, UpdateAccountDto>();
+        CreateMap<CreateUserCommand, UserAddDto>();
     }
 }
