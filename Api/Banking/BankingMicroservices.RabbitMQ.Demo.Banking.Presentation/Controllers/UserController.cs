@@ -38,4 +38,12 @@ public class UserController(
         var result = await Sender.Send(updateUserCommand, cancellationToken);
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
+
+    // DELETE : api/user/{id}
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id,CancellationToken cancellationToken)
+    {
+        var result = await Sender.Send(new DeleteUserCommand(id), cancellationToken);
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
+    }
 }

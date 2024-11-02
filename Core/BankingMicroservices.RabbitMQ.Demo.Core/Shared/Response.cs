@@ -38,18 +38,6 @@ public class Response<T>
         };
     }
 
-    public static Response<T> Create(T? value, StatusCode statusCode = Shared.StatusCode.None)
-    {
-        return new Response<T>
-        {
-            Success = value != null,
-            Message = value != null ? "Operation completed successfully." : "Operation failed.",
-            Payload = value,
-            StatusCode = new StatusDetail(statusCode, StatusCodeDictionary.StatusCodes[statusCode]),
-            Errors = []
-        };
-    }
-
     public static implicit operator Response<T>(Result<T> result) => Create(result);
     public static implicit operator Response<T>(T? value) => Create(value);
 

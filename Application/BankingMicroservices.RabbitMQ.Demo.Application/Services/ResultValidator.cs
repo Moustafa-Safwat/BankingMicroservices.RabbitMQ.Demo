@@ -32,3 +32,26 @@ public class ResultValidator<TRequest, TQuery>(
         return [];
     }
 }
+
+public class ResultValidator<TRequest>(
+    IValidator<TRequest> validator
+    )
+    : IResultValidator<TRequest>
+    where TRequest : ICommand
+{
+    /// <summary>
+    /// Validates the specified query asynchronously.
+    /// </summary>
+    /// <param name="query">The query to validate.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a read-only list of errors.</returns>
+    public async Task<IReadOnlyList<Error>> CommandValidateAsync(TRequest query, CancellationToken cancellationToken)
+    {
+        var validationResult = await validator.ValidateAsync(query, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            return validationResult.Errors.Select(e => new Error(e.PropertyName, e.ErrorMessage)).ToList();
+        }
+        return [];
+    }
+}

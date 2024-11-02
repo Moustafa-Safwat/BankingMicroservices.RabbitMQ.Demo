@@ -51,20 +51,33 @@ public class ApiController(ISender sender, IMapper mapper) : ControllerBase
         {
             var resultType = type.GetGenericArguments()[0];
             var responseType = typeof(Response<>).MakeGenericType(resultType);
-            var createMethod = responseType.GetMethod("Create", [type, typeof(StatusCode)]);
+            return InvokeCreateMethodAndReturnResult(value, baseMethod, statusCode, type, responseType);
+        }
+        else if (type == typeof(Result))
+        {
+            var responseType = typeof(Response<>).MakeGenericType(type);
+            return InvokeCreateMethodAndReturnResult(value, baseMethod, statusCode, type, responseType);
+        }
+        else
+        {
+            // If the value is not of type Result<T>, wrap it in a Response<object>
+            var resultInstance = Response<object>.Create(value, statusCode);
+            return baseMethod(resultInstance);
+        }
+    }
 
-            if (createMethod != null)
+    private static T InvokeCreateMethodAndReturnResult<T>(object? value, Func<object, T> baseMethod, StatusCode statusCode, Type type, Type responseType) where T : ObjectResult
+    {
+        var createMethod = responseType.GetMethod("Create", [type, typeof(StatusCode)]);
+
+        if (createMethod != null)
+        {
+            var responseObject = createMethod.Invoke(null, [value, statusCode]);
+            if (responseObject != null)
             {
-                var responseObject = createMethod.Invoke(null, [value, statusCode]);
-                if (responseObject != null)
-                {
-                    return baseMethod(responseObject);
-                }
+                return baseMethod(responseObject);
             }
         }
-
-        // If the value is not of type Result<T>, wrap it in a Response<object>
-        var resultInstance = Response<object>.Create(value, statusCode);
-        return baseMethod(resultInstance);
+       return  baseMethod(Response<object>.Create(Result.Failure(new("Error", "Failed to create response object")), Core.Shared.StatusCode.None));
     }
 }

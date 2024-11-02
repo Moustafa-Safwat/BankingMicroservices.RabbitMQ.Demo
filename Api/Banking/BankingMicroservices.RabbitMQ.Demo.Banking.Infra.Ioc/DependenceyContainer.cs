@@ -1,5 +1,6 @@
 ﻿using BankingMicroservices.RabbitMQ.Demo.Application.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Application.Services;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Commands.UserCommands;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Dtos;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Mapper;
@@ -50,6 +51,8 @@ public static class DependenceyContainer
              , ResultValidator<AccountQuery, object>>();
         services.AddScoped<IResultValidator<UserQuery, UserSearchDto>
             , ResultValidator<UserQuery, UserSearchDto>>();
+        services.AddScoped<IResultValidator<DeleteUserCommand> 
+            , ResultValidator<DeleteUserCommand>>();
         return services;
     }
     public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
