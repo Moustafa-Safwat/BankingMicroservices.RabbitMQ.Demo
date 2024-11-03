@@ -4,7 +4,6 @@ using BankingMicroservices.RabbitMQ.Demo.Presentation.Configuration;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +12,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var version = builder.Configuration.GetSection("Swagger:Version").Value;
+var title = builder.Configuration.GetSection("Swagger:Title").Value;
+builder.Services.AddSwaggerGen(setup =>
+{
+    setup.SwaggerDoc(version, new()
+    {
+        Title = title,
+        Version = version,
+        Description = builder.Configuration.GetSection("Swagger:Description").Value
+    });
+});
 
 // Register services, repositories, and automapper
 builder.Services.RegisterRepositories()
@@ -42,7 +51,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint($"/swagger/{version}/swagger.json", title);
+    });
 }
 
 app.UseHttpsRedirection();
