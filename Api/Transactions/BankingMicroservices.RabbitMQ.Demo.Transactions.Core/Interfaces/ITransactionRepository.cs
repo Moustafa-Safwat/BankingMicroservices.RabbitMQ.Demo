@@ -1,7 +1,7 @@
 ﻿using BankingMicroservices.RabbitMQ.Demo.Core.Shared;
-using BankingMicroservices.RabbitMQ.Demo.Transaction.Core.Entities;
+using BankingMicroservices.RabbitMQ.Demo.Transactions.Core.Entities;
 
-namespace BankingMicroservices.RabbitMQ.Demo.Transaction.Core.Interfaces;
+namespace BankingMicroservices.RabbitMQ.Demo.Transactions.Core.Interfaces;
 
 public interface ITransactionRepository
 {

@@ -1,4 +1,4 @@
-﻿namespace BankingMicroservices.RabbitMQ.Demo.Transaction.Core.Entities;
+﻿namespace BankingMicroservices.RabbitMQ.Demo.Transactions.Core.Entities;
 
 public enum TransactionStatus
 {

@@ -1,6 +1,6 @@
 ﻿using BankingMicroservices.RabbitMQ.Demo.Core.Entities;
 
-namespace BankingMicroservices.RabbitMQ.Demo.Transaction.Core.Entities;
+namespace BankingMicroservices.RabbitMQ.Demo.Transactions.Core.Entities;
 
 public sealed class Transaction : BaseEntity
 {

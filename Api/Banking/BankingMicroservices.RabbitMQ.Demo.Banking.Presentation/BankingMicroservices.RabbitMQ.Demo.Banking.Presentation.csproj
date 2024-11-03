@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BankingMicroservices.RabbitMQ.Demo.Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation.csproj" />
     <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Banking.Application\BankingMicroservices.RabbitMQ.Demo.Banking.Application.csproj" />
     <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data.csproj" />
     <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Ioc\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Ioc.csproj" />

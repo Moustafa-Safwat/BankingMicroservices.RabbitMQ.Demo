@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Infra.Ioc.csproj" />
+    <ProjectReference Include="..\..\Cross-Cutting\BankingMicroservices.RabbitMQ.Demo.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Infra.Ioc.csproj" />
   </ItemGroup>
 
 </Project>

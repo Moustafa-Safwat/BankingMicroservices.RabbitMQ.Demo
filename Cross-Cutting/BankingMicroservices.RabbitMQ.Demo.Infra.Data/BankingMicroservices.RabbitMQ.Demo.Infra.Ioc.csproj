@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\BankingMicroservices.RabbitMQ.Demo.Application\BankingMicroservices.RabbitMQ.Demo.Application.csproj" />
-    <ProjectReference Include="..\Core\BankingMicroservices.RabbitMQ.Demo.Core\BankingMicroservices.RabbitMQ.Demo.Core.csproj" />
-    <ProjectReference Include="..\Infrastructure\BankingMicroservices.RabbitMQ.Demo.Infra.Bus\BankingMicroservices.RabbitMQ.Demo.Infra.Bus.csproj" />
+    <ProjectReference Include="..\..\Application\BankingMicroservices.RabbitMQ.Demo.Application\BankingMicroservices.RabbitMQ.Demo.Application.csproj" />
+    <ProjectReference Include="..\..\Core\BankingMicroservices.RabbitMQ.Demo.Core\BankingMicroservices.RabbitMQ.Demo.Core.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\BankingMicroservices.RabbitMQ.Demo.Infra.Bus\BankingMicroservices.RabbitMQ.Demo.Infra.Bus.csproj" />
   </ItemGroup>
 
 </Project>

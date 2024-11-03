@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.Rabbit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data", "Api\Banking\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data.csproj", "{66309587-5817-4A7A-B6AE-B825AED2170D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transaction", "Transaction", "{08761228-2D71-417C-A6D2-57A3D19EAE46}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transactions", "Transactions", "{08761228-2D71-417C-A6D2-57A3D19EAE46}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Banking.Application", "Api\Banking\BankingMicroservices.RabbitMQ.Demo.Banking.Application\BankingMicroservices.RabbitMQ.Demo.Banking.Application.csproj", "{01700E9A-9209-4AE2-9CD8-B833769E1BCE}"
 EndProject
@@ -67,19 +67,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cross-Cutting", "Cross-Cutt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{ECE6D392-8D23-452A-958C-5A31D6D42113}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Infra.Ioc", "BankingMicroservices.RabbitMQ.Demo.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Infra.Ioc.csproj", "{78C7C7A5-E1E2-4D3E-957E-E0AA21792CF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Infra.Ioc", "Cross-Cutting\BankingMicroservices.RabbitMQ.Demo.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Infra.Ioc.csproj", "{78C7C7A5-E1E2-4D3E-957E-E0AA21792CF8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Presentation", "BankingMicroservices.RabbitMQ.Demo.Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation.csproj", "{2D7517D7-BD1B-4D76-8F96-EF8BB1C49885}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Presentation", "Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation.csproj", "{2D7517D7-BD1B-4D76-8F96-EF8BB1C49885}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Transaction.Application", "BankingMicroservices.RabbitMQ.Demo.Transaction.Application\BankingMicroservices.RabbitMQ.Demo.Transaction.Application.csproj", "{AEBFFDB1-ACBE-4244-9435-B18F453E6D46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Transactions.Application", "Api\Transactions\BankingMicroservices.RabbitMQ.Demo.Transactions.Application\BankingMicroservices.RabbitMQ.Demo.Transactions.Application.csproj", "{AEBFFDB1-ACBE-4244-9435-B18F453E6D46}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Transaction.Core", "BankingMicroservices.RabbitMQ.Demo.Core.Application\BankingMicroservices.RabbitMQ.Demo.Transaction.Core.csproj", "{DAD30D61-C2CD-41C2-9A30-123B14051AC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Transactions.Core", "Api\Transactions\BankingMicroservices.RabbitMQ.Demo.Transactions.Core\BankingMicroservices.RabbitMQ.Demo.Transactions.Core.csproj", "{DAD30D61-C2CD-41C2-9A30-123B14051AC5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Transaction.Infra.Ioc", "BankingMicroservices.RabbitMQ.Demo.Transaction.Infra.Ioc\BankingMicroservices.RabbitMQ.Demo.Transaction.Infra.Ioc.csproj", "{89125607-8AFE-4F93-9E27-B56B6DACC95A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Ioc", "Api\Transactions\BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Ioc\BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Ioc.csproj", "{89125607-8AFE-4F93-9E27-B56B6DACC95A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Transaction.Infra.Data", "BankingMicroservices.RabbitMQ.Demo.Transaction.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Transaction.Infra.Data.csproj", "{8AA2EC70-7A54-4CF3-B68A-FD97C99D7924}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Data", "Api\Transactions\BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Data.csproj", "{8AA2EC70-7A54-4CF3-B68A-FD97C99D7924}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingMicroservices.RabbitMQ.Demo.Transaction.Presentation", "BankingMicroservices.RabbitMQ.Demo.Transaction.Presentation\BankingMicroservices.RabbitMQ.Demo.Transaction.Presentation.csproj", "{518AD277-E7BD-40A0-BBD7-8B988BE9A2C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingMicroservices.RabbitMQ.Demo.Transactions.Presentation", "Api\Transactions\BankingMicroservices.RabbitMQ.Demo.Transactions.Presentation\BankingMicroservices.RabbitMQ.Demo.Transactions.Presentation.csproj", "{518AD277-E7BD-40A0-BBD7-8B988BE9A2C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
