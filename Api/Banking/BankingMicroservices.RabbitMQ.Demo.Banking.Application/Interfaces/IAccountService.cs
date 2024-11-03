@@ -8,4 +8,6 @@ public interface IAccountService : ICurdService<AddAccountDto, UpdateAccountDto,
 {
     Task<Result<UserSearchDto>> GetUserByAccountIdAsync(int accountId, CancellationToken cancellationToken);
     Task<Result<AccountWithUserDetailsDto>> GetAccountByIdWithUserAsync(int accountId, CancellationToken cancellationToken);
+    Task<Result> Deposit(int accountId, decimal money, CancellationToken cancellationToken);
+    Task<Result> WithDrawal(int accountId, decimal money, CancellationToken cancellationToken);
 }
