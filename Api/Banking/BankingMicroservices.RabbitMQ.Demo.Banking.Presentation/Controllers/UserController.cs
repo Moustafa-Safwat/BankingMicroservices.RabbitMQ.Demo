@@ -17,7 +17,7 @@ public class UserController(
 
     // GET : api/user/{id}
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUserById(int  id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetUserById(int id, CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new UserQuery(id), cancellationToken);
         return result.IsSuccess ? Ok(result) : NotFound(result);
@@ -41,9 +41,17 @@ public class UserController(
 
     // DELETE : api/user/{id}
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id,CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new DeleteUserCommand(id), cancellationToken);
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
+    }
+
+    // GET : api/user?pagenumber=1&pagesize=10
+    [HttpGet]
+    public async Task<IActionResult> GetAccounts(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    {
+        var result = await Sender.Send(new UsersQuery(pageNumber, pageSize), cancellationToken);
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 }

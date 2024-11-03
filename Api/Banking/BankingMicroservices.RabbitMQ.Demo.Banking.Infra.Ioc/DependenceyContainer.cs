@@ -51,8 +51,10 @@ public static class DependenceyContainer
              , ResultValidator<AccountQuery, object>>();
         services.AddScoped<IResultValidator<UserQuery, UserSearchDto>
             , ResultValidator<UserQuery, UserSearchDto>>();
-        services.AddScoped<IResultValidator<DeleteUserCommand> 
+        services.AddScoped<IResultValidator<DeleteUserCommand>
             , ResultValidator<DeleteUserCommand>>();
+        services.AddScoped<IResultValidator<UsersQuery, IQueryable<UserSearchDto>>
+            , ResultValidator<UsersQuery, IQueryable<UserSearchDto>>>();
         return services;
     }
     public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
