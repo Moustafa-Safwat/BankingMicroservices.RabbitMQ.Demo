@@ -1,4 +1,5 @@
 using BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Data.Context;
+using BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Ioc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,9 @@ builder.Services.AddDbContext<TransactionDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("TransactionsDbCS"));
 });
+
+// Register Servces and Repositories
+builder.Services.RegisterRepositories();
 
 var app = builder.Build();
 
