@@ -1,0 +1,6 @@
+@BankingMicroservices.RabbitMQ.Demo.Notification.Presentation_HostAddress = http://localhost:5192
+
+GET {{BankingMicroservices.RabbitMQ.Demo.Notification.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
