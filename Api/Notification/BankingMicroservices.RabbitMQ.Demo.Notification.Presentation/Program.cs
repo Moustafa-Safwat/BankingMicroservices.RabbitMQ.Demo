@@ -1,3 +1,7 @@
+using BankingMicroservices.RabbitMQ.Demo.Infra.Ioc;
+using BankingMicroservices.RabbitMQ.Demo.Notification.Infra.Ioc;
+using BankingMicroservices.RabbitMQ.Demo.Notification.Presentation.Configurations;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +11,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services
+    .RegisterEventBus()
+    .RegisterServices(builder.Configuration);
+
 var app = builder.Build();
+
+app.ConfigureEventBus(); // Subscribe to events
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

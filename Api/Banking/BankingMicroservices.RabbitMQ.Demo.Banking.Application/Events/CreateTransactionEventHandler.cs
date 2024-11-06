@@ -1,12 +1,15 @@
-﻿using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Interfaces;
+﻿using AutoMapper;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Entities;
 using BankingMicroservices.RabbitMQ.Demo.Core.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace BankingMicroservices.RabbitMQ.Demo.Banking.Application.Events;
 
 public sealed class CreateTransactionEventHandler(
     IAccountService accountService,
-    IEventBus eventBus
+    IEventBus eventBus,
+    IConfiguration configuration
     )
     : IEventHandler<CreateTransactionEvent>
 {
@@ -20,6 +23,15 @@ public sealed class CreateTransactionEventHandler(
                 Status = TransactionStatus.Rejected,
                 TransactionId = @event.TransactionId
             });
+
+            await eventBus.PublishAsync(new CreateNotificationEvent
+            {
+                // Emails will be sent to specified recipient for testing only
+                // in real world scenario, the recipient will be the account holder
+                Recipient = configuration.GetValue<string>("Emails:Recipient")!,
+                Body = $"Transaction {@event.TransactionId} has been rejected at {DateTime.Now}",
+                Subject = "Transaction rejected"
+            });
         }
         else
         {   // Success
@@ -28,6 +40,15 @@ public sealed class CreateTransactionEventHandler(
             {
                 Status = TransactionStatus.Completed,
                 TransactionId = @event.TransactionId
+            });
+
+            await eventBus.PublishAsync(new CreateNotificationEvent
+            {
+                // Emails will be sent to specified recipient for testing only
+                // in real world scenario, the recipient will be the account holder
+                Recipient = configuration.GetValue<string>("Emails:Recipient")!,
+                Body = $"Transaction {@event.TransactionId} has been completed successfully at {DateTime.Now}",
+                Subject = "Transaction completed"
             });
 
         }

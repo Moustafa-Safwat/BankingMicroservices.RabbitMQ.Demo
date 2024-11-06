@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Application\BankingMicroservices.RabbitMQ.Demo.Application\BankingMicroservices.RabbitMQ.Demo.Application.csproj" />
+    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Notification.Core\BankingMicroservices.RabbitMQ.Demo.Notification.Core.csproj" />
+  </ItemGroup>
+
 </Project>
