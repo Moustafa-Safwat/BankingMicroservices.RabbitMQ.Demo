@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>a7e5ca1c-6670-43d7-b14e-c9719ea8470d</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation.csproj" />
+    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Banking.Application\BankingMicroservices.RabbitMQ.Demo.Banking.Application.csproj" />
+    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data.csproj" />
+    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Ioc\BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Ioc.csproj" />
+  </ItemGroup>
+
+</Project>

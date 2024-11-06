@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9ade3b35-b402-4271-8bcb-9f30966e22a3</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation.csproj" />
+    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Transactions.Application\BankingMicroservices.RabbitMQ.Demo.Transactions.Application.csproj" />
+    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Ioc\BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Ioc.csproj" />
+  </ItemGroup>
+
+</Project>
