@@ -1,5 +1,7 @@
 using BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data.Context;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Ioc;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Presentation.Configurations;
+using BankingMicroservices.RabbitMQ.Demo.Infra.Ioc;
 using BankingMicroservices.RabbitMQ.Demo.Presentation.Configuration;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -24,20 +26,26 @@ builder.Services.AddSwaggerGen(setup =>
     });
 });
 
+// Register DbContext [ConnectionString is on User Secrets]
+builder.Services.AddDbContext<AccountDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AccountDbCS"));
+});
+
 // Register services, repositories, and automapper
 builder.Services.RegisterRepositories()
                 .RegisterServices()
                 .RegisterAutoMapper()
-                .RegisterRequestValidator();
-// Register DbContext
-builder.Services.AddDbContext<AccountDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("AccountDbCS"))
-);// ConnectionString is on User Secrets
+                .RegisterRequestValidator()
+                .RegisterEvents()
+                .RegisterEventBus();
+
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
         BankingMicroservices.RabbitMQ.Demo.Application.AssemblyReference.Assembly,
     BankingMicroservices.RabbitMQ.Demo.Banking.Application.AssemblyReference.Assembly
 ));
+
 // Register Fluent Validation
 builder.Services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters()
@@ -46,6 +54,8 @@ builder.Services.AddFluentValidationAutoValidation()
 builder.Services.AddCustomValidationResponse();
 
 var app = builder.Build();
+
+app.ConfigureEventBus();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -64,3 +74,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+

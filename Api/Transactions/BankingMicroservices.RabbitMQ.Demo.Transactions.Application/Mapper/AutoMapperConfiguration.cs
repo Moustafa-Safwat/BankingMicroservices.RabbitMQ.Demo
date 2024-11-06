@@ -15,6 +15,7 @@ public class AutoMapperConfiguration
             cfg.AddProfile(new CommandsAndDtoMapping());
             cfg.AddProfile(new QueriesAndDtoMapping());
             cfg.AddProfile(new EntitiesAndDtos());
+            cfg.AddProfile(new EventsAndCommands());
         });
     }
 }

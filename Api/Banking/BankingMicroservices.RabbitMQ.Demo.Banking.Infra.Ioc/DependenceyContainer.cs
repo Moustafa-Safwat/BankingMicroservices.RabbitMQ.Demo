@@ -2,6 +2,7 @@
 using BankingMicroservices.RabbitMQ.Demo.Application.Services;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Commands.UserCommands;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Dtos;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Events;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Mapper;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Queries.AccountQueries;
@@ -9,6 +10,7 @@ using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Queries.UserQueries
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Services;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Entities;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Interfaces;
+using BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data.Context;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Infra.Data.Repository;
 using BankingMicroservices.RabbitMQ.Demo.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +26,15 @@ public static class DependenceyContainer
         services.AddScoped<ICurdService<UserAddDto, UserUpdateDto, UserSearchDto>,
                            CurdService<UserAddDto, UserUpdateDto, UserSearchDto, User>>();
         services.AddScoped<IAccountService, AccountService>();
+        //services.AddScoped<AccountDbContext>();
+        return services;
+    }
+
+    public static IServiceCollection RegisterEvents(this IServiceCollection services)
+    {
+        services.AddScoped<CreateTransactionEventHandler>();
+        services.AddScoped<IEventHandler<CreateTransactionEvent>, CreateTransactionEventHandler>();
+        services.AddSingleton<SubscribeEvents>();
         return services;
     }
 

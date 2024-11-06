@@ -8,5 +8,5 @@ public interface IEventHandler
 
 public interface IEventHandler<TEvent> : IEventHandler where TEvent : Event
 {
-    Task Handel(TEvent @event);
+    Task Handel(TEvent @event, CancellationToken cancellationToken);
 }

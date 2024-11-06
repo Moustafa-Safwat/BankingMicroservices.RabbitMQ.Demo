@@ -89,27 +89,25 @@ public sealed class RabbitMqBus(
             HostName = configuration["RabbitMq:HostName"],
             DispatchConsumersAsync = true
         };
-        using (var connection = factory.CreateConnection())
-        using (var channel = connection.CreateModel())
+        var connection = factory.CreateConnection();
+        var channel = connection.CreateModel();
+        var consumer = new AsyncEventingBasicConsumer(channel);
+        consumer.Received += async (model, ea) =>
         {
-            var consumer = new AsyncEventingBasicConsumer(channel);
-            consumer.Received += async (model, ea) =>
+            var eventName = ea.RoutingKey;
+            var message = Encoding.UTF8.GetString(ea.Body.ToArray());
+            try
             {
-                var eventName = ea.RoutingKey;
-                var message = Encoding.UTF8.GetString(ea.Body.ToArray());
-                try
-                {
-                    await ProcessEventAsync(eventName, message);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            };
-            channel.BasicConsume(queue: eventName,
-                                 autoAck: true,
-                                 consumer: consumer);
-        }
+                await ProcessEventAsync(eventName, message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        };
+        channel.BasicConsume(queue: eventName,
+                             autoAck: true,
+                             consumer: consumer);
         await Task.CompletedTask;
     }
 
@@ -131,16 +129,19 @@ public sealed class RabbitMqBus(
                 // Priority= 10 will be execute before Priority= 5.
                 foreach (var handlerType in handlerTypes.OrderByDescending(h => @event.Priority))
                 {
-                    using var scope = serviceScopeFactory.CreateScope();
-                    var handler = scope.ServiceProvider.GetRequiredService(handlerType);
+                    using (var scope = serviceScopeFactory.CreateScope())
+                    {
+                        var handler = scope.ServiceProvider.GetRequiredService(handlerType);
 
-                    if (handler == null) continue;
-                    var concreteType = typeof(IEventHandler<>).MakeGenericType(eventType!);
-                    concreteType?.GetMethod(nameof(IEventHandler<Event>.Handel))?
-                        .Invoke(handler, [@event]);
+                        if (handler == null) continue;
+                        var concreteType = typeof(IEventHandler<>).MakeGenericType(eventType!);
+                        var result = concreteType?.GetMethod(nameof(IEventHandler<Event>.Handel))?
+                           .Invoke(handler, [@event, new CancellationTokenSource().Token]);
+                        if (result is null) continue;
+                        await (Task)result;
+                    }
                 };
             }
         }
-        await Task.CompletedTask;
     }
 }

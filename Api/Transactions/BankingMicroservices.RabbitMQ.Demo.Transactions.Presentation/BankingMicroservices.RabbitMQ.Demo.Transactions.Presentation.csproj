@@ -16,11 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Data\BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Data.csproj" />
+    <ProjectReference Include="..\..\..\Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation\BankingMicroservices.RabbitMQ.Demo.Presentation.csproj" />
+    <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Transactions.Application\BankingMicroservices.RabbitMQ.Demo.Transactions.Application.csproj" />
     <ProjectReference Include="..\BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Ioc\BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Ioc.csproj" />
   </ItemGroup>
 

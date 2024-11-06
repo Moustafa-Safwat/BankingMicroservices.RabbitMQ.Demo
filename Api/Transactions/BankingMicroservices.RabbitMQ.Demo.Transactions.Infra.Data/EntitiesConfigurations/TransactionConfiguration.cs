@@ -40,10 +40,6 @@ public sealed class TransactionConfiguration : IEntityTypeConfiguration<Transact
         // Set Check Constraint
         builder.ToTable(t => t.HasCheckConstraint("CK_Transaction_Amount_Positive"
             , $"[{nameof(Transaction.Amount)}] > 0"));
-        builder.ToTable(t => t.HasCheckConstraint("CK_Transaction_CreatedDate_Valid"
-         , $"[{nameof(Transaction.CreatedDate)}] <= GETDATE()"));
-        builder.ToTable(t => t.HasCheckConstraint("CK_Transaction_UpdatedDate_Valid"
-       , $"[{nameof(Transaction.UpdatedDate)}] <= GETDATE()"));
         builder.ToTable(t => t.HasCheckConstraint("CK_Transaction_Accounts_Positive"
             , $"[{nameof(Transaction.FromAccount)}] > 0 AND [{nameof(Transaction.ToAccount)}] > 0"));
     }

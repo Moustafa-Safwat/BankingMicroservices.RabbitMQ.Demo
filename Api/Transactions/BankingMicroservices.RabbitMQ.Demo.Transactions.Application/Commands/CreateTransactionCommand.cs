@@ -7,4 +7,4 @@ public sealed record CreateTransactionCommand(
     int ToAccount,
     decimal Amount
     )
-    : ICommand;
+    : ICommand<int>;

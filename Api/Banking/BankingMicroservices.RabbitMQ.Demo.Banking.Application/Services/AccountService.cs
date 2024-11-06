@@ -4,7 +4,6 @@ using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Dtos;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Application.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Entities;
 using BankingMicroservices.RabbitMQ.Demo.Banking.Core.Interfaces;
-using BankingMicroservices.RabbitMQ.Demo.Core.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Core.Shared;
 
 namespace BankingMicroservices.RabbitMQ.Demo.Banking.Application.Services;
