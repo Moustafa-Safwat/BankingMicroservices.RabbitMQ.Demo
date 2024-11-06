@@ -23,8 +23,15 @@ public sealed class CreateTransactionCommandHandler(
         {
             return Result<int>.Failures(result.Errors);
         }
-        var createTransactionEvent = mapper.Map<CreateTransactionCommand, CreateTransactionEvent>(request);
-        await eventBus.PublishAsync(createTransactionEvent);
-        return Result<int>.Success(result.Value);
+        else
+        {
+            int createdTransactionId = result.Value;
+            var createTransactionEvent = mapper.Map<CreateTransactionCommand, CreateTransactionEvent>(request, options =>
+            {
+                options.Items[nameof(CreateTransactionEvent.TransactionId)] = createdTransactionId;
+            });
+            await eventBus.PublishAsync(createTransactionEvent);
+            return Result<int>.Success(createdTransactionId);
+        }
     }
 }

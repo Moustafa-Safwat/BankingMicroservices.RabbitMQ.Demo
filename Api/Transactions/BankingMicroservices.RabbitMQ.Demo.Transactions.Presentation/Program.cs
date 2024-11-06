@@ -2,6 +2,7 @@ using BankingMicroservices.RabbitMQ.Demo.Infra.Ioc;
 using BankingMicroservices.RabbitMQ.Demo.Presentation.Configuration;
 using BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Data.Context;
 using BankingMicroservices.RabbitMQ.Demo.Transactions.Infra.Ioc;
+using BankingMicroservices.RabbitMQ.Demo.Transactions.Presentation.Configurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
@@ -33,9 +34,10 @@ builder.Services.AddDbContext<TransactionDbContext>(options =>
 
 // Register Services, Repositories, and Automapper
 builder.Services.RegisterRepositories()
-    .RegisterServices()
-    .RegisterAutoMapper()
-    .RegisterEventBus();
+                .RegisterServices()
+                .RegisterAutoMapper()
+                .RegisterEvents()
+                .RegisterEventBus();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
@@ -50,6 +52,8 @@ builder.Services.AddFluentValidationAutoValidation()
 builder.Services.AddCustomValidationResponse();
 
 var app = builder.Build();
+
+app.ConfigureEventBus();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

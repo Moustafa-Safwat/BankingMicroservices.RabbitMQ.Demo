@@ -153,5 +153,9 @@ public class CurdRepository<TEntity>(AccountDbContext context)
         {
             return Result.Failure(new Error($"ERR_CONCURRENCY_{EntityName}_EXCEPTION", $"A concurrency exception occurred while updating the {EntityName}."));
         }
+        catch (Exception ex)
+        {
+            return Result.Failure(new Error($"{EntityName}_EXCEPTION", $"{ex.Message}\n{ex.InnerException}"));
+        }
     }
 }

@@ -2,6 +2,7 @@
 using BankingMicroservices.RabbitMQ.Demo.Application.Services;
 using BankingMicroservices.RabbitMQ.Demo.Core.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Transactions.Application.Dtos;
+using BankingMicroservices.RabbitMQ.Demo.Transactions.Application.Events;
 using BankingMicroservices.RabbitMQ.Demo.Transactions.Application.Interfaces;
 using BankingMicroservices.RabbitMQ.Demo.Transactions.Application.Mapper;
 using BankingMicroservices.RabbitMQ.Demo.Transactions.Application.Services;
@@ -39,6 +40,14 @@ public static class DependenceyContainer
         services.AddScoped<ICurdService<AddTransactionDto, UpdateTransactionDto, SearchTransactionDto>
             , CurdService<AddTransactionDto, UpdateTransactionDto, SearchTransactionDto, Transaction>>();
         services.AddScoped<ITransactionService, TransactionService>();
+        return services;
+    }
+
+    public static IServiceCollection RegisterEvents(this IServiceCollection services)
+    {
+        services.AddScoped<ChangeTransactionStatusEventHandler>();
+        services.AddScoped<IEventHandler<ChangeTransactionStatusEvent>, ChangeTransactionStatusEventHandler>();
+        services.AddSingleton<SubscribeEvents>();
         return services;
     }
 

@@ -8,6 +8,9 @@ public sealed class EventsAndCommands:Profile
 {
     public EventsAndCommands()
     {
-        CreateMap<CreateTransactionEvent,CreateTransactionCommand>().ReverseMap();
+        CreateMap<CreateTransactionEvent, CreateTransactionCommand>().ReverseMap()
+            .ForMember(dest => dest.TransactionId, opt => opt.MapFrom((src, dest, destMember, context) =>
+                context.Items[nameof(CreateTransactionEvent.TransactionId)]))
+            .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => 1)); // Set default priority
     }
 }
